@@ -13,6 +13,22 @@ public class ShoppingCart {
         return scanner.nextLine();
     }
 
+    private static boolean checkAffordable(String product, Wallet wallet) throws Exception {
+        int price = Store.getProductPrice(product);
+        if(price <= wallet.getBalance()) {
+            return true;
+        }else {
+            System.out.println("Not enough credits!");
+            return false;
+        }
+    }
+
+    private static void purchase(String product, Wallet wallet, Pocket pocket) throws Exception {
+        int price = Store.getProductPrice(product);
+        wallet.setBalance(wallet.getBalance() - price);
+        pocket.addProduct(product);
+    }
+
     public static void main(String[] args) throws Exception {
         Wallet wallet = new Wallet();
         Pocket pocket = new Pocket();
@@ -28,6 +44,9 @@ public class ShoppingCart {
                - add the name of the product to the pocket file.
                - print the new balance.
             */
+            if (checkAffordable(product, wallet)) {
+                purchase(product, wallet, pocket);
+            } else break;
 
             // Just to print everything again...
             print(wallet, pocket);
