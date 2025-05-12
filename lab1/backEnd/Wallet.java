@@ -55,9 +55,9 @@ public class Wallet {
     }
 
     public boolean safeWithdraw(int valueToWithdraw) throws Exception {
-        lock = this.file.getChannel().lock();
+        
         TimeUnit.SECONDS.sleep(3); // Fixed by the lock.
-        try {
+        try (FileLock lock = this.file.getChannel().lock()){
             int balance = this.getBalance();
             TimeUnit.SECONDS.sleep(3); // Fixed by the lock.
 
@@ -72,7 +72,7 @@ public class Wallet {
             System.out.println("Purchase successful! New balance: " + newBalance);
             return true;
         } finally {
-            lock.release();
+            System.out.println("Lock released.");
         }
     }
 }
