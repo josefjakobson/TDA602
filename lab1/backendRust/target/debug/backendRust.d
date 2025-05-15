@@ -1,1 +1,0 @@
-/home/josef/LangSec/TDA602/lab1/backendRust/target/debug/backendRust: /home/josef/LangSec/TDA602/lab1/backendRust/src/main.rs /home/josef/LangSec/TDA602/lab1/backendRust/src/pocket.rs /home/josef/LangSec/TDA602/lab1/backendRust/src/store.rs /home/josef/LangSec/TDA602/lab1/backendRust/src/wallet.rs
