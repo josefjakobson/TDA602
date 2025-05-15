@@ -7,7 +7,8 @@ use pocket::Pocket;
 use wallet::Wallet;
 use store::Store;
 
-
+// Reads a line from stdin and returns it as a String
+// Functionally a straight copy of the java version
 fn scan() -> io::Result<String> {
     let mut input = String::new();
     println!("What do you want to buy? (type quit to stop) ");
@@ -16,14 +17,18 @@ fn scan() -> io::Result<String> {
 }
 
 
+// Main function for each thread to use separately. Takes in thread id, wallet, pocket and store.
+// Is essentially the same as the main function in the java version, but with some changes to 
+// fit the multi-threaded environment.
 fn shoppingcart_session(thread_id: i32, wallet: Wallet, pocket: Pocket, store: Store) {
     println!("Thread {} started", thread_id);
     println!("Thread {}\n Wallet balance: {} \n Pocket: {:?}", thread_id, wallet.get_balance(), pocket.get_pocket());
     // read from stdin
     let mut input = scan().unwrap();
 
-    while true {
-        if input == "quit" {break;}
+    // Main shopping loop
+    loop {
+        if input == "quit" {break;} 
         let price: i32 = store.get_product_price(&input);
         let success: bool = wallet.safe_withdraw(price);
         if !success { break;}
@@ -50,6 +55,7 @@ fn main() {
     let store1 = store.clone();
     let store2 = store.clone();
 
+    // start two threads
     println!("Product list:\n{}", store.as_string());
     let thread1 = thread::spawn(move || {
         shoppingcart_session(1, wallet1, pocket1, store1);
