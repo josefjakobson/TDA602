@@ -25,3 +25,8 @@ replay_pid*
 
 *.Identifier
 *.class
+
+*.lock
+*.toml
+
+/lab1/backendRust/target/debug/

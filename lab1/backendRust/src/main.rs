@@ -35,10 +35,14 @@ fn shoppingcart_session(thread_id: i32, wallet: Wallet, pocket: Pocket, store: S
 }
 
 fn main() {
+    /// Create initial instance of wallet, pocket and store
     let wallet = Wallet::new();
     let pocket = Pocket::new();
     let store = Store::new();
     
+    /// Clone instances for each thread, each pointing to the same initial instance.
+    /// This is so that there are separate variables for each thread to own,
+    /// but they all point to the same data which is protected by the Mutex.
     let wallet1 = wallet.clone();
     let pocket1 = pocket.clone();
     let wallet2 = wallet.clone();
