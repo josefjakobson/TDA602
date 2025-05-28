@@ -28,7 +28,7 @@ impl Pocket {
 
     /// Returns the contents of the pocket as a single string.
     pub fn get_pocket(&self) -> String {
-        // Waits for the lock to be available since Rust does not allow reading from Mutex variables w/o explicit access
+        // Waits for the lock to be available since Rust does not allow reading from Mutex variables w/o exclusive access
         let products = self.products.lock().unwrap();
         products.join(", ")
     }
